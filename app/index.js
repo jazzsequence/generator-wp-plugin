@@ -97,6 +97,11 @@ module.exports = base.extend({
       }.bind(this)
     }, {
       type   : 'list',
+      name   : 'namespace',
+      message: 'Use Namespaces?',
+      choices: ['No', 'Yes']
+    }, {
+      type   : 'list',
       name   : 'autoloader',
       message: 'Use Autoloader',
       choices: ['Basic', 'Composer', 'None']
