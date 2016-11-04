@@ -124,6 +124,7 @@ module.exports = base.extend({
       this.prefix      = this._.underscored( props.prefix );
       this.year        = new Date().getFullYear();
       this.autoloader  = props.autoloader;
+      this.namespace   = props.namespace;
 
       done();
     }.bind(this));
