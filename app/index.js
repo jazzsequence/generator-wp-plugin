@@ -181,11 +181,19 @@ module.exports = base.extend({
     },
 
     php: function() {
-      this.fs.copyTpl(
-        this.templatePath('plugin.php'),
-        this.destinationPath('/' + this.slug + '.php'),
-        this
-      );
+      if ( this.namespace === 'Yes' ) {
+        this.fs.copyTpl(
+          this.templatePath('plugin.php'),
+          this.destinationPath('/pluginnamespace.php'),
+          this
+        );
+      } else {
+        this.fs.copyTpl(
+          this.templatePath('plugin.php'),
+          this.destinationPath('/' + this.slug + '.php'),
+          this
+        );
+      }
     },
 
     readme: function() {
@@ -274,6 +282,7 @@ module.exports = base.extend({
       this.config.set( 'prefix', this.prefix );
       this.config.set( 'year', this.year );
       this.config.set( 'notests', this.options.notests );
+      this.config.set( 'namespace', this.namespace );
 
       this.config.set( 'currentVersionWP', this.currentVersionWP );
 
