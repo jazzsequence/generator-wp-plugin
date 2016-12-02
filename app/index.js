@@ -152,6 +152,8 @@ module.exports = base.extend({
 
     php: function() {
       this.fs.copyTpl(
+        this.templatePath('plugin.php'),
+        this.destinationPath('/plugin.php'),
         this
       );
     },
