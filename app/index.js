@@ -217,11 +217,5 @@ module.exports = base.extend({
         }
       }
     });
-  },
-
-  install: function () {
-    this.installDependencies({
-      skipInstall: this.options['skip-install']
-    });
   }
 });
