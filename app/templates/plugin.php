@@ -36,7 +36,7 @@
  */
 
 /**
- * Built using generator-plugin-wp
+ * Built using the Human Made plugin generator!
  */
 
 <% if ( autoloader == 'Basic' ) { %>
