@@ -12,8 +12,6 @@ module.exports = base.extend({
   },
 
   initializing: function () {
-    this.pkg = require('../package.json');
-
     // set the initial value
     this.currentVersionWP = '4.4';
 
@@ -137,10 +135,6 @@ module.exports = base.extend({
     },
 
     dotfiles: function() {
-      this.fs.copy(
-        this.templatePath('_bowerrc'),
-        this.destinationPath('/.bowerrc')
-      );
       this.fs.copyTpl(
         this.templatePath('_gitignore'),
         this.destinationPath('/.gitignore'),
@@ -153,22 +147,6 @@ module.exports = base.extend({
         this.templatePath('bower.json'),
         this.destinationPath('/bower.json'),
         this
-      );
-      this.fs.copyTpl(
-        this.templatePath('package.json'),
-        this.destinationPath('/package.json'),
-        this
-      );
-      if ( this.autoloader === 'Composer' ) {
-        this.fs.copyTpl(
-          this.templatePath('composer.json'),
-          this.destinationPath('/composer.json'),
-          this
-        );
-      }
-      this.fs.copy(
-        this.templatePath('Gruntfile.js'),
-        this.destinationPath('/Gruntfile.js')
       );
     },
 
