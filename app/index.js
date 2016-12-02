@@ -24,7 +24,7 @@ module.exports = base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the neat ' + chalk.orange('Human Made') + 'WP plugin generator!'
+      'Welcome to the neat ' + chalk.red('Human Made') + ' WP plugin generator!'
     ));
 
     var prompts = [{
