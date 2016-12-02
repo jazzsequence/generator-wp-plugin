@@ -43,9 +43,9 @@
 /**
  * Autoloads files with classes when needed
  *
- * @since  NEXT
- * @param  string $class_name Name of the class being requested.
- * @return void
+ * @since  <%= version %>
+ * @param  string $class_name Name of the class being requested
+ * @todo   Refactor this shit.
  */
 function <%= prefix %>_autoload_classes( $class_name ) {
 	if ( 0 !== strpos( $class_name, '<%= classprefix %>' ) ) {
