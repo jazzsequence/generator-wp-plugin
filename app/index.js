@@ -95,7 +95,7 @@ module.exports = base.extend({
       type   : 'list',
       name   : 'autoloader',
       message: 'Use Autoloader',
-      choices: ['Basic', 'Composer', 'None']
+      choices: ['Basic', 'None']
     }];
 
     this.prompt(prompts, function (props) {
@@ -229,9 +229,5 @@ module.exports = base.extend({
     this.installDependencies({
       skipInstall: this.options['skip-install']
     });
-
-    if ( this.autoloader === 'Composer' && !this.options['skip-install'] ) {
-      this.spawnCommand('composer', ['install']);
-    }
   }
 });
