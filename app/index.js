@@ -95,11 +95,6 @@ module.exports = base.extend({
       }.bind(this)
     }, {
       type   : 'list',
-      name   : 'namespace',
-      message: 'Use Namespaces?',
-      choices: ['No', 'Yes']
-    }, {
-      type   : 'list',
       name   : 'autoloader',
       message: 'Use Autoloader',
       choices: ['Basic', 'Composer', 'None']
@@ -122,7 +117,6 @@ module.exports = base.extend({
       this.prefix      = this._.underscored( props.prefix );
       this.year        = new Date().getFullYear();
       this.autoloader  = props.autoloader;
-      this.namespace   = props.namespace;
 
       done();
     }.bind(this));
@@ -179,31 +173,15 @@ module.exports = base.extend({
     },
 
     php: function() {
-      if ( this.namespace === 'Yes' ) {
-        this.fs.copyTpl(
-          this.templatePath('plugin.php'),
-          this.destinationPath('/pluginnamespace.php'),
-          this
-        );
-      } else {
-        this.fs.copyTpl(
-          this.templatePath('plugin.php'),
-          this.destinationPath('/' + this.slug + '.php'),
-          this
-        );
-      }
+      this.fs.copyTpl(
+        this
+      );
     },
 
     readme: function() {
       this.fs.copyTpl(
         this.templatePath('README.md'),
         this.destinationPath('/README.md'),
-        this
-      );
-    },
-
-
-      this.fs.copyTpl(
         this
       );
     },
@@ -242,7 +220,6 @@ module.exports = base.extend({
       this.config.set( 'classprefix', this.classprefix );
       this.config.set( 'prefix', this.prefix );
       this.config.set( 'year', this.year );
-      this.config.set( 'namespace', this.namespace );
 
       this.config.set( 'currentVersionWP', this.currentVersionWP );
 
