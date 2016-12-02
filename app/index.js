@@ -9,8 +9,6 @@ var async = require( 'async' );
 module.exports = base.extend({
   constructor: function () {
     base.apply(this, arguments);
-
-    this.option('notests');
   },
 
   initializing: function () {
@@ -204,45 +202,8 @@ module.exports = base.extend({
       );
     },
 
-    tests: function() {
-      if ( this.options.notests ) {
-        return;
-      }
-
-      this.fs.copy(
-        this.templatePath('phpunit.xml'),
-        this.destinationPath('/phpunit.xml'),
-        this
-      );
-
-      this.fs.copy(
-        this.templatePath('.travis.yml'),
-        this.destinationPath('/.travis.yml'),
-        this
-      );
-
-      this.fs.copy(
-        this.templatePath('Dockunit.json'),
-        this.destinationPath('/Dockunit.json'),
-        this
-      );
-
-      this.fs.copy(
-        this.templatePath('bin/install-wp-tests.sh'),
-        this.destinationPath('bin/install-wp-tests.sh'),
-        this
-      );
-
 
       this.fs.copyTpl(
-        this.templatePath('tests/bootstrap.php'),
-        this.destinationPath('tests/bootstrap.php'),
-        this
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('tests/test-base.php'),
-        this.destinationPath('tests/test-base.php'),
         this
       );
     },
@@ -281,7 +242,6 @@ module.exports = base.extend({
       this.config.set( 'classprefix', this.classprefix );
       this.config.set( 'prefix', this.prefix );
       this.config.set( 'year', this.year );
-      this.config.set( 'notests', this.options.notests );
       this.config.set( 'namespace', this.namespace );
 
       this.config.set( 'currentVersionWP', this.currentVersionWP );
@@ -315,10 +275,6 @@ module.exports = base.extend({
 
     if ( this.autoloader === 'Composer' && !this.options['skip-install'] ) {
       this.spawnCommand('composer', ['install']);
-    }
-
-    if ( !this.options.notests ) {
-      fs.chmodSync(this.destinationPath('bin/install-wp-tests.sh'), '700');
     }
   }
 });
