@@ -60,12 +60,6 @@ function <%= prefix %>_autoload_classes( $class_name ) {
 	<%= classname %>::include_file( 'includes/class-' . $filename );
 }
 spl_autoload_register( '<%= prefix %>_autoload_classes' );
-<% } else if ( autoloader == 'Composer' ) { %>
-// User composer autoload.
-require 'vendor/autoload_52.php';
-<% } else { %>
-// Include additional php files here.
-// require 'includes/admin.php';
 <% } %>
 /**
  * Main initiation class
