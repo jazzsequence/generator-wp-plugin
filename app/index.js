@@ -24,19 +24,19 @@ module.exports = base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the neat ' + chalk.red('Plugin WP') + ' generator!'
+      'Welcome to the neat ' + chalk.orange('Human Made') + 'WP plugin generator!'
     ));
 
     var prompts = [{
       type   : 'input',
       name   : 'name',
       message: 'Name',
-      default: 'WDS Client Plugin Name'
+      default: 'Client Plugin Name'
     }, {
       type   : 'input',
       name   : 'homepage',
       message: 'Homepage',
-      default: 'http://webdevstudios.com'
+      default: 'httpa://hmn.md'
     }, {
       type   : 'input',
       name   : 'description',
@@ -46,24 +46,24 @@ module.exports = base.extend({
       type   : 'input',
       name   : 'version',
       message: 'Version',
-      default: '0.0.0'
+      default: '1.0.0-alpha'
     }, {
       type   : 'input',
       name   : 'author',
       message: 'Author',
-      default: 'WebDevStudios',
+      default: 'Human Made',
       save   : true
     }, {
       type   : 'input',
       name   : 'authoremail',
       message: 'Author Email',
-      default: 'contact@webdevstudios.com',
+      default: 'hello@hmn.md',
       save   : true
     }, {
       type   : 'input',
       name   : 'authorurl',
       message: 'Author URL',
-      default: 'http://webdevstudios.com',
+      default: 'https://hmn.md',
       save   : true
     }, {
       type   : 'input',
