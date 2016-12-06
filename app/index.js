@@ -122,6 +122,7 @@ module.exports = base.extend({
       this.namespace   = this._namespaceify( props.namespace );
       this.year        = new Date().getFullYear();
       this.autoloader  = props.autoloader;
+      this.prefix      = this._prefixify( props.project + '_' + props.namespace );
 
       done();
     }.bind(this));
