@@ -45,12 +45,6 @@ module.exports = yeoman.generators.Base.extend({
 		return result;
 	},
 
-	_wpClassPrefix: function( s ) {
-		var words = s.replace( /_/g, ' ' );
-		var letters = words.replace(/[a-z]/g, '');
-		var prefix = letters.replace(/\s/g, '');
-		return prefix + '_';
-	},
 
 	_escapeDoubleQuotes: function( s ) {
 		return s.replace( /"/g, '\\"');
