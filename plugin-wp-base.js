@@ -28,6 +28,23 @@ module.exports = yeoman.generators.Base.extend({
 		return result;
 	},
 
+	_namespaceify: function( namespace, client ) {
+		var namespace = str.replace( client, '' );
+		var words     = this._.words( namespace );
+		var result    = '';
+
+		for ( var i = 0; i < words.length; i += 1 ) {
+			if ( this._.classify( words[i] ) ) {
+				result += this._.capitalize( words[i] );
+				if ( (i + 1) < words.length ) {
+					result += '\\';
+				}
+			}
+		}
+
+		return result;
+	},
+
 	_wpClassPrefix: function( s ) {
 		var words = s.replace( /_/g, ' ' );
 		var letters = words.replace(/[a-z]/g, '');
