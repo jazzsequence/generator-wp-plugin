@@ -29,7 +29,7 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	_prefixify: function( s ) {
-		var words = _wpClassify( s );
+		var words = this._wpClassify( s );
 		return words.toLowerCase();
 	},
 
