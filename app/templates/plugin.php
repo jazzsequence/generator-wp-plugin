@@ -48,13 +48,13 @@
  * @todo   Refactor this shit.
  */
 function <%= prefix %>_autoload_classes( $class_name ) {
-	if ( 0 !== strpos( $class_name, '<%= classprefix %>' ) ) {
+	if ( 0 !== strpos( $class_name, '<%= namespace %>' ) ) {
 		return;
 	}
 
 	$filename = strtolower( str_replace(
 		'_', '-',
-		substr( $class_name, strlen( '<%= classprefix %>' ) )
+		substr( $class_name, strlen( '<%= namespace %>' ) )
 	) );
 
 	<%= classname %>::include_file( 'includes/class-' . $filename );
