@@ -119,7 +119,7 @@ module.exports = base.extend({
       this.license     = this._.clean( props.license );
       this.slug        = this._.slugify( props.slug );
       this.project     = this._wpClassify( props.project );
-      this.namespace   = this._namespaceify( this.namespace );
+      this.namespace   = this._namespaceify( props.namespace );
       this.year        = new Date().getFullYear();
       this.autoloader  = props.autoloader;
 
