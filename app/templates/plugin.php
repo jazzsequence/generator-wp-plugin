@@ -39,6 +39,9 @@
  * Built using the Human Made plugin generator!
  */
 
+namespace <% project %>\<% namespace %>;
+require_once( __DIR__ . '/namespace.php' );
+
 <% if ( autoloader == 'Basic' ) { %>
 /**
  * Autoloads files with classes when needed
