@@ -36,7 +36,9 @@ module.exports = base.extend({
       type   : 'input',
       name   : 'name',
       message: 'Name',
-      default: 'Client Plugin Name'
+      default: function( p ) {
+        return p.client + ' Plugin Name'
+      }.bind(this)
     }, {
       type   : 'input',
       name   : 'homepage',
