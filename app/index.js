@@ -93,10 +93,11 @@ module.exports = base.extend({
       }.bind(this)
     }, {
       type   : 'input',
-      name   : 'prefix',
-      message: 'Plugin Prefix',
+      name   : 'namespace',
+      message: 'Plugin Namespace',
       default: function( p ) {
-        return this._.underscored( this._.slugify( p.slug ) );
+        return this._namespaceify( p.name, p.client );
+      }.bind(this)
       }.bind(this)
     }, {
       type   : 'list',
