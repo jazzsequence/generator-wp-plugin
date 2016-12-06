@@ -10,7 +10,7 @@ namespace <%= project %>\<%= namespace %>;
 /**
  * Hook all the things.
  *
- * @since  <% version %>
+ * @since  <=% version %>
  */
 function bootstrap() {
 	// Add all your plugin hooks here.
