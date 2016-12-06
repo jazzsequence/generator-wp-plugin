@@ -29,7 +29,9 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	_namespaceify: function( namespace, client = '' ) {
-		var namespace = namespace.replace( client, '' );
+		if ( '' != client ) {
+			var namespace = namespace.replace( client, '' );
+		}
 		var words     = this._.words( namespace );
 		var result    = '';
 
