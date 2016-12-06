@@ -107,6 +107,7 @@ module.exports = base.extend({
 
     this.prompt(prompts, function (props) {
       // Sanitize inputs
+      this.client      = this._.clean( props.client );
       this.name        = this._.clean( props.name );
       this.homepage    = this._.clean( props.homepage );
       this.description = this._.clean( props.description );
@@ -117,9 +118,8 @@ module.exports = base.extend({
       this.authorurl   = this._.clean( props.authorurl );
       this.license     = this._.clean( props.license );
       this.slug        = this._.slugify( props.slug );
-      this.classname   = this._wpClassify( props.classname );
-      this.classprefix = this._wpClassPrefix( this.classname );
-      this.prefix      = this._.underscored( props.prefix );
+      this.project     = this._wpClassify( props.project );
+      this.namespace   = this._namespaceify( this.namespace );
       this.year        = new Date().getFullYear();
       this.autoloader  = props.autoloader;
 
