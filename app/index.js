@@ -166,6 +166,14 @@ module.exports = base.extend({
       );
     },
 
+    namespace: function() {
+      this.fs.copyTpl(
+        this.templatePath('namespace.php'),
+        this.destinationPath('/namespace.php'),
+        this
+      );
+    },
+
     readme: function() {
       this.fs.copyTpl(
         this.templatePath('README.md'),
