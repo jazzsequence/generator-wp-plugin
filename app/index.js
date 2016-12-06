@@ -43,7 +43,7 @@ module.exports = base.extend({
       type   : 'input',
       name   : 'homepage',
       message: 'Homepage',
-      default: 'httpa://hmn.md'
+      default: 'https://hmn.md'
     }, {
       type   : 'input',
       name   : 'description',
