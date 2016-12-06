@@ -29,6 +29,11 @@ module.exports = base.extend({
 
     var prompts = [{
       type   : 'input',
+      name   : 'client',
+      message: 'Client Name',
+      default: 'Client'
+    }, {
+      type   : 'input',
       name   : 'name',
       message: 'Name',
       default: 'Client Plugin Name'
