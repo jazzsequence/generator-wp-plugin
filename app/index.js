@@ -98,7 +98,6 @@ module.exports = base.extend({
       default: function( p ) {
         return this._namespaceify( p.name, p.client );
       }.bind(this)
-      }.bind(this)
     }, {
       type   : 'list',
       name   : 'autoloader',
