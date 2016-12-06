@@ -89,7 +89,7 @@ module.exports = base.extend({
       name   : 'project',
       message: 'Project Namespace',
       default: function( p ) {
-        return p.client;
+        return this._namespaceify( p.client );
       }.bind(this)
     }, {
       type   : 'input',
