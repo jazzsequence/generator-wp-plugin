@@ -188,6 +188,7 @@ module.exports = base.extend({
     },
 
     saveConfig: function() {
+      this.config.set( 'client', this.client );
       this.config.set( 'name', this.name );
       this.config.set( 'homepage', this.homepage );
       this.config.set( 'description', this.description );
@@ -197,9 +198,8 @@ module.exports = base.extend({
       this.config.set( 'authorurl', this.authorurl );
       this.config.set( 'license', this.license );
       this.config.set( 'slug', this.slug );
-      this.config.set( 'classname', this.classname );
-      this.config.set( 'classprefix', this.classprefix );
-      this.config.set( 'prefix', this.prefix );
+      this.config.set( 'project', this.project );
+      this.config.set( 'namespace', this.namespace );
       this.config.set( 'year', this.year );
 
       this.config.set( 'currentVersionWP', this.currentVersionWP );
