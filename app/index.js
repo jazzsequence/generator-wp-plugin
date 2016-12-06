@@ -86,10 +86,10 @@ module.exports = base.extend({
       }.bind(this)
     }, {
       type   : 'input',
-      name   : 'classname',
-      message: 'Plugin Class Name',
+      name   : 'project',
+      message: 'Project Namespace',
       default: function( p ) {
-        return this._wpClassify( p.name );
+        return p.client;
       }.bind(this)
     }, {
       type   : 'input',
