@@ -1,11 +1,11 @@
 <?php
 /**
- * <% name %>
+ * <%= name %>
  *
- * @package <% project %>\<% namespace %>
+ * @package <%= project %>\<%= namespace %>
  */
 
-namespace <% project %>\<% namespace %>;
+namespace <%= project %>\<%= namespace %>;
 
 /**
  * Hook all the things.
