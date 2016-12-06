@@ -1,5 +1,5 @@
 # Human Made Plugin Generator
-[![Build Status](https://secure.travis-ci.org/jazzsequence/generator-hm-plugin.png?branch=master)](https://travis-ci.org/jazzsequence/generator-hm-plugin)
+[![Build Status](https://secure.travis-ci.org/jazzsequence/generator-hm-plugin.png?branch=develop)](https://travis-ci.org/jazzsequence/generator-hm-plugin)
 
 > [Yeoman](http://yeoman.io) generator for WordPress plugins.
 
