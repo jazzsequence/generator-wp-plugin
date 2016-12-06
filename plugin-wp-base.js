@@ -37,7 +37,7 @@ module.exports = yeoman.generators.Base.extend({
 			if ( this._.classify( words[i] ) ) {
 				result += this._.capitalize( words[i] );
 				if ( (i + 1) < words.length ) {
-					result += '\\';
+					result += '';
 				}
 			}
 		}
