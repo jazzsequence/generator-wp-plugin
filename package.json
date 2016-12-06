@@ -1,14 +1,14 @@
 {
-  "name": "generator-plugin-wp",
-  "version": "0.15.0",
+  "name": "generator-hm-plugin",
+  "version": "0.1.0",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "WebDevStudios/generator-plugin-wp",
+  "repository": "jazzsequence/generator-hm-plugin",
   "author": {
-    "name": "Camden Segal",
-    "email": "camden.segal@gmail.com",
-    "url": "https://github.com/CamdenSegal"
+    "name": "Chris Reynolds",
+    "email": "hello@chrisreynolds.io",
+    "url": "https://github.com/jazzsequence"
   },
   "engines": {
     "node": ">=0.10.0"

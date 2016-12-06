@@ -9,13 +9,9 @@ var async = require( 'async' );
 module.exports = base.extend({
   constructor: function () {
     base.apply(this, arguments);
-
-    this.option('notests');
   },
 
   initializing: function () {
-    this.pkg = require('../package.json');
-
     // set the initial value
     this.currentVersionWP = '4.4';
 
@@ -28,19 +24,26 @@ module.exports = base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the neat ' + chalk.red('Plugin WP') + ' generator!'
+      'Welcome to the neat ' + chalk.red('Human Made') + ' WP plugin generator!'
     ));
 
     var prompts = [{
       type   : 'input',
+      name   : 'client',
+      message: 'Client Name',
+      default: 'Client'
+    }, {
+      type   : 'input',
       name   : 'name',
       message: 'Name',
-      default: 'WDS Client Plugin Name'
+      default: function( p ) {
+        return p.client + ' Plugin Name'
+      }.bind(this)
     }, {
       type   : 'input',
       name   : 'homepage',
       message: 'Homepage',
-      default: 'http://webdevstudios.com'
+      default: 'https://hmn.md'
     }, {
       type   : 'input',
       name   : 'description',
@@ -50,24 +53,24 @@ module.exports = base.extend({
       type   : 'input',
       name   : 'version',
       message: 'Version',
-      default: '0.0.0'
+      default: '1.0.0-alpha'
     }, {
       type   : 'input',
       name   : 'author',
       message: 'Author',
-      default: 'WebDevStudios',
+      default: 'Human Made',
       save   : true
     }, {
       type   : 'input',
       name   : 'authoremail',
       message: 'Author Email',
-      default: 'contact@webdevstudios.com',
+      default: 'hello@hmn.md',
       save   : true
     }, {
       type   : 'input',
       name   : 'authorurl',
       message: 'Author URL',
-      default: 'http://webdevstudios.com',
+      default: 'https://hmn.md',
       save   : true
     }, {
       type   : 'input',
@@ -83,27 +86,28 @@ module.exports = base.extend({
       }.bind(this)
     }, {
       type   : 'input',
-      name   : 'classname',
-      message: 'Plugin Class Name',
+      name   : 'project',
+      message: 'Project Namespace',
       default: function( p ) {
-        return this._wpClassify( p.name );
+        return this._namespaceify( p.client );
       }.bind(this)
     }, {
       type   : 'input',
-      name   : 'prefix',
-      message: 'Plugin Prefix',
+      name   : 'namespace',
+      message: 'Plugin Namespace',
       default: function( p ) {
-        return this._.underscored( this._.slugify( p.slug ) );
+        return this._namespaceify( p.name, p.client );
       }.bind(this)
     }, {
       type   : 'list',
       name   : 'autoloader',
       message: 'Use Autoloader',
-      choices: ['Basic', 'Composer', 'None']
+      choices: ['Basic', 'None']
     }];
 
     this.prompt(prompts, function (props) {
       // Sanitize inputs
+      this.client      = this._.clean( props.client );
       this.name        = this._.clean( props.name );
       this.homepage    = this._.clean( props.homepage );
       this.description = this._.clean( props.description );
@@ -114,11 +118,11 @@ module.exports = base.extend({
       this.authorurl   = this._.clean( props.authorurl );
       this.license     = this._.clean( props.license );
       this.slug        = this._.slugify( props.slug );
-      this.classname   = this._wpClassify( props.classname );
-      this.classprefix = this._wpClassPrefix( this.classname );
-      this.prefix      = this._.underscored( props.prefix );
+      this.project     = this._wpClassify( props.project );
+      this.namespace   = this._namespaceify( props.namespace );
       this.year        = new Date().getFullYear();
       this.autoloader  = props.autoloader;
+      this.prefix      = this._prefixify( props.project + '_' + props.namespace );
 
       done();
     }.bind(this));
@@ -139,10 +143,6 @@ module.exports = base.extend({
     },
 
     dotfiles: function() {
-      this.fs.copy(
-        this.templatePath('_bowerrc'),
-        this.destinationPath('/.bowerrc')
-      );
       this.fs.copyTpl(
         this.templatePath('_gitignore'),
         this.destinationPath('/.gitignore'),
@@ -156,28 +156,20 @@ module.exports = base.extend({
         this.destinationPath('/bower.json'),
         this
       );
-      this.fs.copyTpl(
-        this.templatePath('package.json'),
-        this.destinationPath('/package.json'),
-        this
-      );
-      if ( this.autoloader === 'Composer' ) {
-        this.fs.copyTpl(
-          this.templatePath('composer.json'),
-          this.destinationPath('/composer.json'),
-          this
-        );
-      }
-      this.fs.copy(
-        this.templatePath('Gruntfile.js'),
-        this.destinationPath('/Gruntfile.js')
-      );
     },
 
     php: function() {
       this.fs.copyTpl(
         this.templatePath('plugin.php'),
-        this.destinationPath('/' + this.slug + '.php'),
+        this.destinationPath('/plugin.php'),
+        this
+      );
+    },
+
+    namespace: function() {
+      this.fs.copyTpl(
+        this.templatePath('namespace.php'),
+        this.destinationPath('/namespace.php'),
         this
       );
     },
@@ -190,59 +182,10 @@ module.exports = base.extend({
       );
     },
 
-    tests: function() {
-      if ( this.options.notests ) {
-        return;
-      }
-
-      this.fs.copy(
-        this.templatePath('phpunit.xml'),
-        this.destinationPath('/phpunit.xml'),
-        this
-      );
-
-      this.fs.copy(
-        this.templatePath('.travis.yml'),
-        this.destinationPath('/.travis.yml'),
-        this
-      );
-
-      this.fs.copy(
-        this.templatePath('Dockunit.json'),
-        this.destinationPath('/Dockunit.json'),
-        this
-      );
-
-      this.fs.copy(
-        this.templatePath('bin/install-wp-tests.sh'),
-        this.destinationPath('bin/install-wp-tests.sh'),
-        this
-      );
-
-
-      this.fs.copyTpl(
-        this.templatePath('tests/bootstrap.php'),
-        this.destinationPath('tests/bootstrap.php'),
-        this
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('tests/test-base.php'),
-        this.destinationPath('tests/test-base.php'),
-        this
-      );
-    },
-
     folders: function() {
       this.fs.copyTpl(
         this.templatePath('assets/README.md'),
         this.destinationPath('assets/README.md'),
-        this
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('assets/repo/README.md'),
-        this.destinationPath('assets/repo/README.md'),
         this
       );
 
@@ -254,6 +197,7 @@ module.exports = base.extend({
     },
 
     saveConfig: function() {
+      this.config.set( 'client', this.client );
       this.config.set( 'name', this.name );
       this.config.set( 'homepage', this.homepage );
       this.config.set( 'description', this.description );
@@ -263,11 +207,9 @@ module.exports = base.extend({
       this.config.set( 'authorurl', this.authorurl );
       this.config.set( 'license', this.license );
       this.config.set( 'slug', this.slug );
-      this.config.set( 'classname', this.classname );
-      this.config.set( 'classprefix', this.classprefix );
-      this.config.set( 'prefix', this.prefix );
+      this.config.set( 'project', this.project );
+      this.config.set( 'namespace', this.namespace );
       this.config.set( 'year', this.year );
-      this.config.set( 'notests', this.options.notests );
 
       this.config.set( 'currentVersionWP', this.currentVersionWP );
 
@@ -291,19 +233,5 @@ module.exports = base.extend({
         }
       }
     });
-  },
-
-  install: function () {
-    this.installDependencies({
-      skipInstall: this.options['skip-install']
-    });
-
-    if ( this.autoloader === 'Composer' && !this.options['skip-install'] ) {
-      this.spawnCommand('composer', ['install']);
-    }
-
-    if ( !this.options.notests ) {
-      fs.chmodSync(this.destinationPath('bin/install-wp-tests.sh'), '700');
-    }
   }
 });
