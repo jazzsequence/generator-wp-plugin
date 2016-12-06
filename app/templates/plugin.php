@@ -66,4 +66,4 @@ spl_autoload_register( '<%= prefix %>_autoload_classes' );
 <% } %>
 
 // Kick it off.
-add_action( 'plugins_loaded', array( <%= prefix %>(), 'hooks' ) );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\bootstrap' );
