@@ -3,7 +3,7 @@
 
 > [Yeoman](http://yeoman.io) WordPress plugin generator based on Human Made's coding standards.
 
-![Screenshot](https://dl.dropboxusercontent.com/content_link/u0TyXH1TxLzAdpkL3ht3wyc35duVjlyNle6jlXyHLIEbe46Hi7fcZ0xbi2g0F57c/file?raw=1&dl=0&duc_id=Vs2D9wnKt2P6Oe6IIMpwyItTNB3aKxnT32mUnh2lZ3Zz9u97p6wrjtjeofx4Hg1S&size=1280x960&size_mode=3)
+![Screenshot](https://www.evernote.com/shard/s19/sh/a2493408-5412-49c7-9a4e-11724da40f81/dfd5ffd9b640f7b8/res/80e63bbb-0e20-4427-b331-66fca186be4d/yo-hm-plugin.gif?resizeSmall&width=832)
 
 Check out an [example of a generated plugin](https://github.com/WebDevStudios/generator-plugin-wp-example).
 
