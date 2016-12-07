@@ -28,13 +28,13 @@ If you don't have [Yeoman](http://yeoman.io/) installed:
 npm install -g yo
 ```
 
-To install generator-plugin-wp from npm, run:
+To install `generator-hm-plugin` from npm, run:
 
 ```bash
 npm install -g generator-hm-plugin
 ```
 
-To use generator-plugin-wp, `cd` to your WordPress plugins folder and:
+To use `generator-hm-plugin`, `cd` to your WordPress plugins folder and:
 
 ```bash
 yo hm-plugin
