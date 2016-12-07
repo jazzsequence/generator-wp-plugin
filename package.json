@@ -1,6 +1,6 @@
 {
   "name": "generator-hm-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Yeoman WordPress plugin generator based on Human Made's coding standards.",
   "license": "MIT",
   "main": "app/index.js",
