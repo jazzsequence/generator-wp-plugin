@@ -98,12 +98,12 @@ module.exports = base.extend({
       default: function( p ) {
         return this._namespaceify( p.name, p.client );
       }.bind(this)
-    }, {
+    }/*, {
       type   : 'list',
       name   : 'autoloader',
       message: 'Use Autoloader',
       choices: ['Basic', 'None']
-    }];
+    }*/];
 
     this.prompt(prompts, function (props) {
       // Sanitize inputs
