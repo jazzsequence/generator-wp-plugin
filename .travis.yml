@@ -4,14 +4,6 @@ node_js:
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-hm-plugin' ]; then cd .. && eval "mv $currentfolder generator-hm-plugin" && cd generator-hm-plugin; fi
-language: php
-php:
-  - '5.4'
-  - '5.5'
-  - '5.6'
-  - '7.0'
-  - hhvm
-  - nightly
 script:
     - phpunit
     - vendor/bin/phpcs --standard=vendor/humanmade/coding-standards .
