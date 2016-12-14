@@ -190,8 +190,8 @@ module.exports = base.extend({
       );
 
       this.fs.copyTpl(
-        this.templatePath('includes/README.md'),
-        this.destinationPath('includes/README.md'),
+        this.templatePath('inc/README.md'),
+        this.destinationPath('inc/README.md'),
         this
       );
     },
