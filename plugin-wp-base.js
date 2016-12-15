@@ -33,7 +33,8 @@ module.exports = yeoman.generators.Base.extend({
 		return words.toLowerCase();
 	},
 
-	_namespaceify: function( namespace, client = '' ) {
+	_namespaceify: function( namespace, client ) {
+		client = client || '';
 		if ( '' != client ) {
 			var namespace = namespace.replace( client, '' );
 		}
