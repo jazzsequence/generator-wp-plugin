@@ -74,11 +74,6 @@ module.exports = base.extend({
       save   : true
     }, {
       type   : 'input',
-      name   : 'license',
-      message: 'License',
-      default: 'GPLv2'
-    }, {
-      type   : 'input',
       name   : 'slug',
       message: 'Plugin Slug',
       default: function( p ) {
@@ -116,7 +111,6 @@ module.exports = base.extend({
       this.author      = this._.clean( props.author );
       this.authoremail = this._.clean( props.authoremail );
       this.authorurl   = this._.clean( props.authorurl );
-      this.license     = this._.clean( props.license );
       this.slug        = this._.slugify( props.slug );
       this.project     = this._wpClassify( props.project );
       this.namespace   = this._namespaceify( props.namespace );
@@ -205,7 +199,6 @@ module.exports = base.extend({
       this.config.set( 'author', this.author );
       this.config.set( 'authoremail', this.authoremail );
       this.config.set( 'authorurl', this.authorurl );
-      this.config.set( 'license', this.license );
       this.config.set( 'slug', this.slug );
       this.config.set( 'project', this.project );
       this.config.set( 'namespace', this.namespace );

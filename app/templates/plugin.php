@@ -7,7 +7,7 @@
  * Author:      <%= author %>
  * Author URI:  <%= authorurl %>
  * Donate link: <%= homepage %>
- * License:     <%= license %>
+ * License:     GPLv2
  * Text Domain: <%= slug %>
  * Domain Path: /languages
  *
