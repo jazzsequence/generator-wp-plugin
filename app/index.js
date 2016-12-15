@@ -91,14 +91,15 @@ module.exports = base.extend({
       type   : 'list',
       name   : 'autoloader',
       message: 'Use Autoloader',
+      default: 'existing',
       choices: [
         {
-          name: 'Basic',
-          value: 'basic'
-        }, {
           name: 'Existing (HM\\Autoloader\\register_class_path)',
           value: 'existing',
           short: 'Existing'
+        }, {
+          name: 'Basic',
+          value: 'basic'
         }, {
           name: 'None',
           value: 'none'
