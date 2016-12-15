@@ -155,8 +155,8 @@ module.exports = base.extend({
 
     namespace: function() {
       this.fs.copyTpl(
-        this.templatePath('namespace.php'),
-        this.destinationPath('/namespace.php'),
+        this.templatePath('inc/namespace.php'),
+        this.destinationPath('inc/namespace.php'),
         this
       );
     },
@@ -171,14 +171,8 @@ module.exports = base.extend({
 
     folders: function() {
       this.fs.copyTpl(
-        this.templatePath('assets/README.md'),
-        this.destinationPath('assets/README.md'),
-        this
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('includes/README.md'),
-        this.destinationPath('includes/README.md'),
+        this.templatePath('assets/_gitignore'),
+        this.destinationPath('assets/.gitignore'),
         this
       );
     },
