@@ -1,6 +1,5 @@
 # <%= name %> #
 **Contributors:**      <%= author %>  
-**Donate link:**       <%= homepage %>  
 **Tags:**  
 **Requires at least:** 4.4  
 **Tested up to:**      <%= currentVersionWP %> 
