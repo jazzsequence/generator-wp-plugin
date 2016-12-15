@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: <%= name %>
- * Plugin URI:  <%= homepage %>
+ * Plugin URI: <%= homepage %>
  * Description: <%= description %>
- * Author:      <%= author %>
- * Author URI:  <%= authorurl %>
- * License:     GPLv2
+ * Author: <%= author %>
+ * Author URI: <%= authorurl %>
+ * License: GPLv2
  */
 
 namespace <%= project %>\<%= namespace %>;
