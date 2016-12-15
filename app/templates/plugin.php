@@ -6,7 +6,6 @@
  * Version:     <%= version %>
  * Author:      <%= author %>
  * Author URI:  <%= authorurl %>
- * Donate link: <%= homepage %>
  * License:     GPLv2
  * Text Domain: <%= slug %>
  * Domain Path: /languages
