@@ -3,7 +3,6 @@
  * Plugin Name: <%= name %>
  * Plugin URI:  <%= homepage %>
  * Description: <%= description %>
- * Version:     <%= version %>
  * Author:      <%= author %>
  * Author URI:  <%= authorurl %>
  * License:     GPLv2
@@ -11,7 +10,6 @@
  * Domain Path: /languages
  *
  * @link <%= homepage %>
- * @version <%= version %>
  */
 
 /**
@@ -38,29 +36,15 @@
 
 namespace <%= project %>\<%= namespace %>;
 
+<% if ( autoloader == 'existing' ) {
+%>use HM\Autoloader;
+
 require_once __DIR__ . '/inc/namespace.php';
-<% if ( autoloader == 'Basic' ) { %>
-/**
- * Autoloads files with classes when needed
- *
- * @since  <%= version %>
- * @param  string $class_name Name of the class being requested
- * @todo   Refactor this shit.
- */
-function <%= prefix %>_autoload_classes( $class_name ) {
-	if ( 0 !== strpos( $class_name, '<%= namespace %>' ) ) {
-		return;
-	}
 
-	$filename = strtolower( str_replace(
-		'_', '-',
-		substr( $class_name, strlen( '<%= namespace %>' ) )
-	) );
-
-	<%= classname %>::include_file( 'includes/class-' . $filename );
-}
-spl_autoload_register( '<%= prefix %>_autoload_classes' );
-<% } %>
-
+Autoloader\register_class_path( __NAMESPACE__, __DIR__ . '/inc' );
+<% } else {
+%>require_once __DIR__ . '/inc/namespace.php';
+<% }
+%>
 // Kick it off.
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\bootstrap' );

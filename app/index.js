@@ -87,12 +87,24 @@ module.exports = base.extend({
       default: function( p ) {
         return this._namespaceify( p.name, p.client );
       }.bind(this)
-    }/*, {
+    }, {
       type   : 'list',
       name   : 'autoloader',
       message: 'Use Autoloader',
-      choices: ['Basic', 'None']
-    }*/];
+      choices: [
+        {
+          name: 'Basic',
+          value: 'basic'
+        }, {
+          name: 'Existing (HM\\Autoloader\\register_class_path)',
+          value: 'existing',
+          short: 'Existing'
+        }, {
+          name: 'None',
+          value: 'none'
+        }
+      ]
+    }];
 
     this.prompt(prompts, function (props) {
       // Sanitize inputs
