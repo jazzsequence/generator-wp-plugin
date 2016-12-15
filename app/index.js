@@ -62,12 +62,6 @@ module.exports = base.extend({
       save   : true
     }, {
       type   : 'input',
-      name   : 'authoremail',
-      message: 'Author Email',
-      default: 'hello@hmn.md',
-      save   : true
-    }, {
-      type   : 'input',
       name   : 'authorurl',
       message: 'Author URL',
       default: 'https://hmn.md',
@@ -109,7 +103,6 @@ module.exports = base.extend({
       this.descriptionEscaped = this._escapeDoubleQuotes( this.description );
       this.version     = this._.clean( props.version );
       this.author      = this._.clean( props.author );
-      this.authoremail = this._.clean( props.authoremail );
       this.authorurl   = this._.clean( props.authorurl );
       this.slug        = this._.slugify( props.slug );
       this.project     = this._wpClassify( props.project );
@@ -197,7 +190,6 @@ module.exports = base.extend({
       this.config.set( 'description', this.description );
       this.config.set( 'version', this.version );
       this.config.set( 'author', this.author );
-      this.config.set( 'authoremail', this.authoremail );
       this.config.set( 'authorurl', this.authorurl );
       this.config.set( 'slug', this.slug );
       this.config.set( 'project', this.project );
