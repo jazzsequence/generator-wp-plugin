@@ -12,8 +12,6 @@
  * Domain Path: /languages
  *
  * @link <%= homepage %>
- *
- * @package <%= name %>
  * @version <%= version %>
  */
 

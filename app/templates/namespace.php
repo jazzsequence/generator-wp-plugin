@@ -1,8 +1,6 @@
 <?php
 /**
  * <%= name %>
- *
- * @package <%= project %>\<%= namespace %>
  */
 
 namespace <%= project %>\<%= namespace %>;
