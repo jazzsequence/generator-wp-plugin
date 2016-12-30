@@ -1,12 +1,33 @@
-language: node_js
+language:
+  - php
+  - node_js
+php:
+  - 7.0
 node_js:
   - 'stable'
-before_install:
-  - currentfolder=${PWD##*/}
-  - if [ "$currentfolder" != 'generator-hm-plugin' ]; then cd .. && eval "mv $currentfolder generator-hm-plugin" && cd generator-hm-plugin; fi
+env:
+    - WP_VERSION=latest
+before_install: echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+install:
+    - export DEV_LIB_PATH=bin/dev-lib
+    - if [ ! -e "$DEV_LIB_PATH" ] && [ -L .travis.yml ]; then export DEV_LIB_PATH=$( dirname $( readlink .travis.yml ) ); fi
+    - if [ ! -e "$DEV_LIB_PATH" ]; then git clone https://github.com/xwp/wp-dev-lib.git $DEV_LIB_PATH; fi
+    - source $DEV_LIB_PATH/travis.install.sh
+
 script:
-    - phpunit
-    - vendor/bin/phpcs --standard=vendor/humanmade/coding-standards .
+    - source $DEV_LIB_PATH/travis.script.sh
+
+after_script:
+    - source $DEV_LIB_PATH/travis.after_script.sh
+
+# before_install:
+#   - currentfolder=${PWD##*/}
+#   - if [ "$currentfolder" != 'generator-hm-plugin' ]; then cd .. && eval "mv $currentfolder generator-hm-plugin" && cd generator-hm-plugin; fi
+# script:
+#     - cd $currentfolder
+#     - phpunit
+#     - vendor/bin/phpcs --standard=vendor/humanmade/coding-standards .
 
 notifications:
   email:
