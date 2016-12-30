@@ -20,7 +20,7 @@ install:
 
 script:
   - source $DEV_LIB_PATH/travis.script.sh
-  - phpunit
+  # - phpunit
   - vendor/bin/phpcs --standard=vendor/humanmade/coding-standards .
 
 after_script:
