@@ -6,28 +6,25 @@ php:
 node_js:
   - 'stable'
 env:
-    - WP_VERSION=latest
-before_install: echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - WP_VERSION=latest
+before_install:
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - currentfolder=${PWD##*/}
+  - if [ "$currentfolder" != 'generator-hm-plugin' ]; then cd .. && eval "mv $currentfolder generator-hm-plugin" && cd generator-hm-plugin; fi
 
 install:
-    - export DEV_LIB_PATH=bin/dev-lib
-    - if [ ! -e "$DEV_LIB_PATH" ] && [ -L .travis.yml ]; then export DEV_LIB_PATH=$( dirname $( readlink .travis.yml ) ); fi
-    - if [ ! -e "$DEV_LIB_PATH" ]; then git clone https://github.com/xwp/wp-dev-lib.git $DEV_LIB_PATH; fi
-    - source $DEV_LIB_PATH/travis.install.sh
+  - export DEV_LIB_PATH=bin/dev-lib
+  - if [ ! -e "$DEV_LIB_PATH" ] && [ -L .travis.yml ]; then export DEV_LIB_PATH=$( dirname $( readlink .travis.yml ) ); fi
+  - if [ ! -e "$DEV_LIB_PATH" ]; then git clone https://github.com/xwp/wp-dev-lib.git $DEV_LIB_PATH; fi
+  - source $DEV_LIB_PATH/travis.install.sh
 
 script:
-    - source $DEV_LIB_PATH/travis.script.sh
+  - source $DEV_LIB_PATH/travis.script.sh
+  - phpunit
+  - vendor/bin/phpcs --standard=vendor/humanmade/coding-standards .
 
 after_script:
-    - source $DEV_LIB_PATH/travis.after_script.sh
-
-# before_install:
-#   - currentfolder=${PWD##*/}
-#   - if [ "$currentfolder" != 'generator-hm-plugin' ]; then cd .. && eval "mv $currentfolder generator-hm-plugin" && cd generator-hm-plugin; fi
-# script:
-#     - cd $currentfolder
-#     - phpunit
-#     - vendor/bin/phpcs --standard=vendor/humanmade/coding-standards .
+  - source $DEV_LIB_PATH/travis.after_script.sh
 
 notifications:
   email:
