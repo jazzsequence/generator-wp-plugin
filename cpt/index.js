@@ -116,7 +116,7 @@ module.exports = base.extend({
   writing: function () {
     this.fs.copyTpl(
       this.templatePath('cpt.php'),
-      this.destinationPath('includes/class-' + this._.slugify( this.name ) + '.php'),
+      this.destinationPath('inc/class-' + this._.slugify( this.name ) + '.php'),
       this
     );
 
