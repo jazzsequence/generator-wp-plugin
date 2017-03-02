@@ -1,6 +1,7 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var updateNotifier = require('update-notifier');
+const engine = require('php-parser');
 
 module.exports = yeoman.generators.Base.extend({
 	constructor: function () {
@@ -33,7 +34,8 @@ module.exports = yeoman.generators.Base.extend({
 		return words.toLowerCase();
 	},
 
-	_namespaceify: function( namespace, client = '' ) {
+	_namespaceify: function( namespace, client ) {
+		client = client || '';
 		if ( '' != client ) {
 			var namespace = namespace.replace( client, '' );
 		}
@@ -109,5 +111,58 @@ module.exports = yeoman.generators.Base.extend({
 		// mainPluginFile = this._addPropertyMagicGetter( mainPluginFile, slug );
 
 		// this.fs.write( this.destinationPath( this.rc.slug + '.php' ), mainPluginFile );
+	},
+
+	/**
+	 * Sort requires, with `namespace.php` first.
+	 *
+	 * @param {String} a
+	 * @param {String} b
+	 */
+	_sortRequires: function ( a, b ) {
+		return a.replace('namespace.php', '.').localeCompare( b.replace('namespace.php', '.') );
+	},
+
+	_addRequire: function ( contents, slug ) {
+		const parser = new engine({
+			parser: {
+				extractDoc: true,
+				locations: true,
+			}
+		});
+
+		const tokens = parser.tokenGetAll(contents);
+		let startLine = null, endLine = null;
+		const validTokens = [ 'T_INCLUDE', 'T_INCLUDE_ONCE', 'T_REQUIRE', 'T_REQUIRE_ONCE' ];
+		for (let i = 0; i < tokens.length; i++) {
+			const token = tokens[i];
+			if ( ! startLine ) {
+				if ( validTokens.indexOf( token[0] ) < 0 ) {
+					continue;
+				}
+
+				startLine = token[2] - 1;
+			}
+
+			if ( token[0] !== 'T_WHITESPACE' || token[1] !== '\n\n' ) {
+				continue;
+			}
+
+			endLine = token[2] - 1;
+			break;
+		}
+
+		const lines = contents.split('\n');
+		const required = lines.slice( startLine, endLine + 1 );
+
+		required.push( `require_once __DIR__ . '/inc/${slug.toLowerCase()}/namespace.php';` );
+		required.sort( this._sortRequires );
+
+		const newLines = [
+			...lines.slice( 0, startLine ),
+			...required.filter( (value, index) => required.indexOf( value ) === index ),
+			...lines.slice( endLine + 1 )
+		];
+		return newLines.join( '\n' );
 	}
 });

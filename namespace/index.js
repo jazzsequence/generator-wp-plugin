@@ -96,5 +96,14 @@ module.exports = base.extend({
 			this.destinationPath('inc/' + this._.slugify( this.name ) + '/namespace.php'),
 			this
 		);
+
+		const mainFile = this.destinationPath( 'plugin.php' );
+		this.fs.write(
+			mainFile,
+			this._addRequire(
+				this.fs.read( mainFile ),
+				this._.slugify( this.name )
+			)
+		);
 	}
 });
