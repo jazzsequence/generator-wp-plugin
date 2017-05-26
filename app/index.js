@@ -62,21 +62,10 @@ module.exports = base.extend({
       save   : true
     }, {
       type   : 'input',
-      name   : 'authoremail',
-      message: 'Author Email',
-      default: 'hello@hmn.md',
-      save   : true
-    }, {
-      type   : 'input',
       name   : 'authorurl',
       message: 'Author URL',
       default: 'https://hmn.md',
       save   : true
-    }, {
-      type   : 'input',
-      name   : 'license',
-      message: 'License',
-      default: 'GPLv2'
     }, {
       type   : 'input',
       name   : 'slug',
@@ -98,12 +87,25 @@ module.exports = base.extend({
       default: function( p ) {
         return this._namespaceify( p.name, p.client );
       }.bind(this)
-    }/*, {
+    }, {
       type   : 'list',
       name   : 'autoloader',
       message: 'Use Autoloader',
-      choices: ['Basic', 'None']
-    }*/];
+      default: 'existing',
+      choices: [
+        {
+          name: 'Existing (HM\\Autoloader\\register_class_path)',
+          value: 'existing',
+          short: 'Existing'
+        }, {
+          name: 'Basic',
+          value: 'basic'
+        }, {
+          name: 'None',
+          value: 'none'
+        }
+      ]
+    }];
 
     this.prompt(prompts, function (props) {
       // Sanitize inputs
@@ -114,9 +116,7 @@ module.exports = base.extend({
       this.descriptionEscaped = this._escapeDoubleQuotes( this.description );
       this.version     = this._.clean( props.version );
       this.author      = this._.clean( props.author );
-      this.authoremail = this._.clean( props.authoremail );
       this.authorurl   = this._.clean( props.authorurl );
-      this.license     = this._.clean( props.license );
       this.slug        = this._.slugify( props.slug );
       this.project     = this._wpClassify( props.project );
       this.namespace   = this._namespaceify( props.namespace );
@@ -168,8 +168,8 @@ module.exports = base.extend({
 
     namespace: function() {
       this.fs.copyTpl(
-        this.templatePath('namespace.php'),
-        this.destinationPath('/namespace.php'),
+        this.templatePath('inc/namespace.php'),
+        this.destinationPath('inc/namespace.php'),
         this
       );
     },
@@ -184,14 +184,8 @@ module.exports = base.extend({
 
     folders: function() {
       this.fs.copyTpl(
-        this.templatePath('assets/README.md'),
-        this.destinationPath('assets/README.md'),
-        this
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('includes/README.md'),
-        this.destinationPath('includes/README.md'),
+        this.templatePath('assets/_gitignore'),
+        this.destinationPath('assets/.gitignore'),
         this
       );
     },
@@ -203,9 +197,7 @@ module.exports = base.extend({
       this.config.set( 'description', this.description );
       this.config.set( 'version', this.version );
       this.config.set( 'author', this.author );
-      this.config.set( 'authoremail', this.authoremail );
       this.config.set( 'authorurl', this.authorurl );
-      this.config.set( 'license', this.license );
       this.config.set( 'slug', this.slug );
       this.config.set( 'project', this.project );
       this.config.set( 'namespace', this.namespace );

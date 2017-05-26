@@ -1,69 +1,24 @@
 <?php
 /**
  * Plugin Name: <%= name %>
- * Plugin URI:  <%= homepage %>
+ * Plugin URI: <%= homepage %>
  * Description: <%= description %>
- * Version:     <%= version %>
- * Author:      <%= author %>
- * Author URI:  <%= authorurl %>
- * Donate link: <%= homepage %>
- * License:     <%= license %>
- * Text Domain: <%= slug %>
- * Domain Path: /languages
- *
- * @link <%= homepage %>
- *
- * @package <%= name %>
- * @version <%= version %>
- */
-
-/**
- * Copyright (c) <%= year %> <%= author %> (email : <%= authoremail %>)
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License, version 2 or, at
- * your discretion, any later version, as published by the Free
- * Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
-
-/**
- * Built using the Human Made plugin generator!
+ * Author: <%= author %>
+ * Author URI: <%= authorurl %>
+ * License: GPLv2
  */
 
 namespace <%= project %>\<%= namespace %>;
 
-require_once( __DIR__ . '/namespace.php' );
-<% if ( autoloader == 'Basic' ) { %>
-/**
- * Autoloads files with classes when needed
- *
- * @since  <%= version %>
- * @param  string $class_name Name of the class being requested
- * @todo   Refactor this shit.
- */
-function <%= prefix %>_autoload_classes( $class_name ) {
-	if ( 0 !== strpos( $class_name, '<%= namespace %>' ) ) {
-		return;
-	}
+<% if ( autoloader == 'existing' ) {
+%>use HM\Autoloader;
 
-	$filename = strtolower( str_replace(
-		'_', '-',
-		substr( $class_name, strlen( '<%= namespace %>' ) )
-	) );
+require_once __DIR__ . '/inc/namespace.php';
 
-	<%= classname %>::include_file( 'includes/class-' . $filename );
-}
-spl_autoload_register( '<%= prefix %>_autoload_classes' );
-<% } %>
-
+Autoloader\register_class_path( __NAMESPACE__, __DIR__ . '/inc' );
+<% } else {
+%>require_once __DIR__ . '/inc/namespace.php';
+<% }
+%>
 // Kick it off.
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\bootstrap' );
