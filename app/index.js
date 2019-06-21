@@ -9,7 +9,7 @@ var async   = require( 'async' );
 module.exports = class extends Plugin {
   initializing() {
     // set the initial value
-    this.currentVersionWP = '4.4';
+    this.currentVersionWP = '5.2.2';
 
     // get the latest WP version
     this.getLatestWPVersion();
