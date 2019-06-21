@@ -40,7 +40,7 @@ module.exports = class extends Plugin {
       type   : 'input',
       name   : 'homepage',
       message: 'Homepage',
-      default: 'https://hmn.md'
+      default: 'https://humanmade.com'
     }, {
       type   : 'input',
       name   : 'description',
@@ -50,7 +50,7 @@ module.exports = class extends Plugin {
       type   : 'input',
       name   : 'version',
       message: 'Version',
-      default: '1.0.0-alpha'
+      default: '1.0.0'
     }, {
       type   : 'input',
       name   : 'author',
@@ -61,7 +61,7 @@ module.exports = class extends Plugin {
       type   : 'input',
       name   : 'authorurl',
       message: 'Author URL',
-      default: 'https://hmn.md',
+      default: 'https://humanmade.com',
       save   : true
     }, {
       type   : 'input',
