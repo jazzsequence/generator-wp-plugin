@@ -1,19 +1,19 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var updateNotifier = require('update-notifier');
-const engine = require('php-parser');
+const Generator      = require( 'yeoman-generator' );
+const updateNotifier = require( 'update-notifier' );
+const engine         = require( 'php-parser' );
 
-module.exports = yeoman.generators.Base.extend({
-	constructor: function () {
-		// Calling the super constructor is important so our generator is correctly set up
-		yeoman.generators.Base.apply(this, arguments);
+module.exports = class extends Generator {
+	constructor( args, opts ) {
+		// Calling the super constructor is important so our generator is correctly set up.
+		super( args, opts );
 
-		updateNotifier({
-				pkg: require('./package.json')
-			}).notify({defer: false});
-	},
+		updateNotifier( {
+			pkg: require( './package.json' )
+		} ).notify({defer: false});
+	}
 
-	_wpClassify: function( s ) {
+	_wpClassify( s ) {
 		var words  = this._.words( s );
 		var result = '';
 
@@ -27,14 +27,14 @@ module.exports = yeoman.generators.Base.extend({
 		}
 
 		return result;
-	},
+	}
 
-	_prefixify: function( s ) {
+	_prefixify( s ) {
 		var words = this._wpClassify( s );
 		return words.toLowerCase();
-	},
+	}
 
-	_namespaceify: function( namespace, client ) {
+	_namespaceify( namespace, client ) {
 		client = client || '';
 		if ( '' != client ) {
 			var namespace = namespace.replace( client, '' );
@@ -52,21 +52,21 @@ module.exports = yeoman.generators.Base.extend({
 		}
 
 		return result;
-	},
+	}
 
 
-	_escapeDoubleQuotes: function( s ) {
+	_escapeDoubleQuotes( s ) {
 		return s.replace( /"/g, '\\"');
-	},
+	}
 
-	__addStringToPluginClasses: function( mainPluginFile, toAdd ) {
+	__addStringToPluginClasses( mainPluginFile, toAdd ) {
 		// var endComment = '\t} // END OF PLUGIN CLASSES FUNCTION';
 		// var newInclude = '\t\t' + toAdd + '\n' + endComment;
 
 		// return mainPluginFile.replace( endComment, newInclude );
-	},
+	}
 
-	_addStringToPluginClasses: function( toAdd ) {
+	_addStringToPluginClasses( toAdd ) {
 		// if ( ! this.rc.slug ) {
 		// 	return;
 		// }
@@ -75,9 +75,9 @@ module.exports = yeoman.generators.Base.extend({
 		// mainPluginFile = this.__addStringToPluginClasses( mainPluginFile, toAdd );
 
 		// this.fs.write( this.destinationPath( this.rc.slug + '.php' ), mainPluginFile );
-	},
+	}
 
-	_addPluginProperty: function( file, slug, className ) {
+	_addPluginProperty( file, slug, className ) {
 
 		// var toAdd = '\t/**';
 		// toAdd += '\n\t * Instance of ' + className;
@@ -90,15 +90,15 @@ module.exports = yeoman.generators.Base.extend({
 		// var endComment = '\t/**\n\t * Creates or returns an instance of this class.';
 
 		// return file.replace( endComment, toAdd + '\n\n' + endComment );
-	},
+	}
 
-	_addPluginClass: function( file, slug, className ) {
+	_addPluginClass( file, slug, className ) {
 		// var toAdd = '$this->' + slug + ' = new ' + className + '( $this );';
 		// var toRemove = '\n\t\t// $this->plugin_class = new ' + this.rc.classprefix + 'Plugin_Class( $this );';
 		// return this.__addStringToPluginClasses( file.replace( toRemove, '' ), toAdd );
-	},
+	}
 
-	_addIncludeClass: function( slug, className ) {
+	_addIncludeClass( slug, className ) {
 		// if ( ! this.rc.slug ) {
 		// 	return;
 		// }
@@ -111,7 +111,7 @@ module.exports = yeoman.generators.Base.extend({
 		// mainPluginFile = this._addPropertyMagicGetter( mainPluginFile, slug );
 
 		// this.fs.write( this.destinationPath( this.rc.slug + '.php' ), mainPluginFile );
-	},
+	}
 
 	/**
 	 * Sort requires, with `namespace.php` first.
@@ -119,11 +119,11 @@ module.exports = yeoman.generators.Base.extend({
 	 * @param {String} a
 	 * @param {String} b
 	 */
-	_sortRequires: function ( a, b ) {
+	_sortRequires ( a, b ) {
 		return a.replace('namespace.php', '.').localeCompare( b.replace('namespace.php', '.') );
-	},
+	}
 
-	_addRequire: function ( contents, slug ) {
+	_addRequire ( contents, slug ) {
 		const parser = new engine({
 			parser: {
 				extractDoc: true,
@@ -165,4 +165,4 @@ module.exports = yeoman.generators.Base.extend({
 		];
 		return newLines.join( '\n' );
 	}
-});
+};
