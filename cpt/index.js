@@ -101,7 +101,7 @@ module.exports = base.extend({
 
         if ( props.name || props.pluginname ) {
           this.cptname   = this.pluginname + ' ' + this._.capitalize( this.name );
-          this.classname    = this.namespace + this._wpClassify( this.name );
+          this.classname    = this._wpClassPrefix( this.pluginname ) + this._wpClassify( this.name );
           this.cptslug   = this.slug + '-' + this._.slugify( this.name );
           this.cptprefix  = this._.underscored( this.slug + ' ' + this.name );
         }
@@ -116,7 +116,7 @@ module.exports = base.extend({
   writing: function () {
     this.fs.copyTpl(
       this.templatePath('cpt.php'),
-      this.destinationPath('inc/class-' + this._.slugify( this.name ) + '.php'),
+      this.destinationPath('includes/class-' + this._.slugify( this.name ) + '.php'),
       this
     );
 
@@ -137,19 +137,19 @@ module.exports = base.extend({
     }
 
     if ( this.composer ) {
-      this.spawnCommand('composer', ['require', 'johnbillion/extended-cpts']);
+      this.spawnCommand('composer', ['require', 'webdevstudios/cpt-core']);
 
       if ( !this.options.nocmb2 ) {
         this.spawnCommand('composer', ['require', 'webdevstudios/cmb2']);
       }
     } else {
       this.mkdir('vendor');
-      if ( !this.fs.exists('vendor/extended-cpts/extended-cpts.php') ) {
+      if ( !this.fs.exists('vendor/cpt-core/CPT_Core.php') ) {
         ghdownload({
-          user: 'johnbillion',
-          repo: 'extended-cpts',
+          user: 'WebDevStudios',
+          repo: 'CPT_Core',
           ref : 'master'
-        }, this.destinationPath('vendor/extended-cpts') );
+        }, this.destinationPath('vendor/cpt-core') );
       }
 
       if ( !this.fs.exists('vendor/cmb2/init.php') && !this.options.nocmb2 ) {

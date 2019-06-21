@@ -1,27 +1,31 @@
 'use strict';
-var Plugin  = require( '../hm-plugin-base' );
-var chalk   = require( 'chalk' );
-var yosay   = require( 'yosay' );
-var fs      = require( 'fs' );
+var base = require('../plugin-wp-base');
+var chalk = require('chalk');
+var yosay = require('yosay');
+var fs = require('fs');
 var request = require( 'request' );
-var async   = require( 'async' );
+var async = require( 'async' );
 
-module.exports = class extends Plugin {
-  initializing() {
+module.exports = base.extend({
+  constructor: function () {
+    base.apply(this, arguments);
+  },
+
+  initializing: function () {
     // set the initial value
     this.currentVersionWP = '4.4';
 
     // get the latest WP version
     this.getLatestWPVersion();
-  }
+  },
 
-  prompting() {
+  prompting: function () {
     var done = this.async();
 
     // Have Yeoman greet the user.
-    this.log( yosay(
-      `Welcome to the neat ${ chalk.red( 'Human Made' ) } WP plugin generator!`
-    ) );
+    this.log(yosay(
+      'Welcome to the neat ' + chalk.red('Human Made') + ' WP plugin generator!'
+    ));
 
     var prompts = [{
       type   : 'input',
@@ -122,66 +126,90 @@ module.exports = class extends Plugin {
 
       done();
     }.bind(this));
-  }
+  },
 
-  writing() {
-    // Folder
-    var done = this.async();
-    fs.lstat( this.destinationPath( this.slug ), function(err, stats) {
-      if (!err && stats.isDirectory()) {
-        this.log( chalk.red( 'A plugin already exists with this folder name, exiting...' ) );
-        process.exit();
-      }
+  writing: {
+    folder: function() {
+      var done = this.async();
+      fs.lstat( this.destinationPath( this.slug ), function(err, stats) {
+        if (!err && stats.isDirectory()) {
+          this.log( chalk.red( 'A plugin already exists with this folder name, exiting...' ) );
+          process.exit();
+        }
 
-      this.destinationRoot( this.slug );
-      done();
-    }.bind(this));
+        this.destinationRoot( this.slug );
+        done();
+      }.bind(this));
+    },
 
-    this.fs.copyTpl(
-      this.templatePath('bower.json'),
-      this.destinationPath('/bower.json'),
-      this
-    );
+    dotfiles: function() {
+      this.fs.copyTpl(
+        this.templatePath('_gitignore'),
+        this.destinationPath('/.gitignore'),
+        this
+      );
+    },
 
-    // Plugin files
-    this.fs.copyTpl(
-      this.templatePath('plugin.php'),
-      this.destinationPath('/plugin.php'),
-      this
-    );
+    configs: function() {
+      this.fs.copyTpl(
+        this.templatePath('bower.json'),
+        this.destinationPath('/bower.json'),
+        this
+      );
+    },
 
-    this.fs.copyTpl(
-      this.templatePath('inc/namespace.php'),
-      this.destinationPath('inc/namespace.php'),
-      this
-    );
+    php: function() {
+      this.fs.copyTpl(
+        this.templatePath('plugin.php'),
+        this.destinationPath('/plugin.php'),
+        this
+      );
+    },
 
-    // Readme
-    this.fs.copyTpl(
-      this.templatePath('README.md'),
-      this.destinationPath('/README.md'),
-      this
-    );
+    namespace: function() {
+      this.fs.copyTpl(
+        this.templatePath('inc/namespace.php'),
+        this.destinationPath('inc/namespace.php'),
+        this
+      );
+    },
 
-    // Save config
-    this.config.set( 'client', this.client );
-    this.config.set( 'name', this.name );
-    this.config.set( 'homepage', this.homepage );
-    this.config.set( 'description', this.description );
-    this.config.set( 'version', this.version );
-    this.config.set( 'author', this.author );
-    this.config.set( 'authorurl', this.authorurl );
-    this.config.set( 'slug', this.slug );
-    this.config.set( 'project', this.project );
-    this.config.set( 'namespace', this.namespace );
-    this.config.set( 'year', this.year );
+    readme: function() {
+      this.fs.copyTpl(
+        this.templatePath('README.md'),
+        this.destinationPath('/README.md'),
+        this
+      );
+    },
 
-    this.config.set( 'currentVersionWP', this.currentVersionWP );
+    folders: function() {
+      this.fs.copyTpl(
+        this.templatePath('assets/_gitignore'),
+        this.destinationPath('assets/.gitignore'),
+        this
+      );
+    },
 
-    this.config.save();
-  }
+    saveConfig: function() {
+      this.config.set( 'client', this.client );
+      this.config.set( 'name', this.name );
+      this.config.set( 'homepage', this.homepage );
+      this.config.set( 'description', this.description );
+      this.config.set( 'version', this.version );
+      this.config.set( 'author', this.author );
+      this.config.set( 'authorurl', this.authorurl );
+      this.config.set( 'slug', this.slug );
+      this.config.set( 'project', this.project );
+      this.config.set( 'namespace', this.namespace );
+      this.config.set( 'year', this.year );
 
-  getLatestWPVersion() {
+      this.config.set( 'currentVersionWP', this.currentVersionWP );
+
+      this.config.save();
+    }
+  },
+
+  getLatestWPVersion: function() {
     request.get({
       url: 'https://api.wordpress.org/core/version-check/1.7/',
       json: true,
@@ -198,4 +226,4 @@ module.exports = class extends Plugin {
       }
     });
   }
-}
+});
