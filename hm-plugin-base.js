@@ -14,8 +14,8 @@ module.exports = class extends Generator {
 	}
 
 	_wpClassify( s ) {
-		var words  = this._.words( s );
-		var result = '';
+		const words  = this._.words( s );
+		let   result = '';
 
 		for ( var i = 0; i < words.length; i += 1 ) {
 			if ( this._.classify( words[i] ) ) {
@@ -30,7 +30,7 @@ module.exports = class extends Generator {
 	}
 
 	_prefixify( s ) {
-		var words = this._wpClassify( s );
+		const words = this._wpClassify( s );
 		return words.toLowerCase();
 	}
 
@@ -39,8 +39,9 @@ module.exports = class extends Generator {
 		if ( '' != client ) {
 			var namespace = namespace.replace( client, '' );
 		}
-		var words     = this._.words( namespace );
-		var result    = '';
+
+		const words  = this._.words( namespace );
+		let   result = '';
 
 		for ( var i = 0; i < words.length; i += 1 ) {
 			if ( this._.classify( words[i] ) ) {
@@ -120,21 +121,25 @@ module.exports = class extends Generator {
 	 * @param {String} b
 	 */
 	_sortRequires ( a, b ) {
-		return a.replace('namespace.php', '.').localeCompare( b.replace('namespace.php', '.') );
+		return a.replace( 'namespace.php', '.' ).localeCompare(
+			b.replace( 'namespace.php', '.' )
+		);
 	}
 
 	_addRequire ( contents, slug ) {
-		const parser = new engine({
+		const parser      = new engine( {
 			parser: {
 				extractDoc: true,
 				locations: true,
 			}
-		});
+		} ),
+		      tokens      = parser.tokenGetAll(contents),
+		      validTokens = [ 'T_INCLUDE', 'T_INCLUDE_ONCE', 'T_REQUIRE', 'T_REQUIRE_ONCE' ];
 
-		const tokens = parser.tokenGetAll(contents);
-		let startLine = null, endLine = null;
-		const validTokens = [ 'T_INCLUDE', 'T_INCLUDE_ONCE', 'T_REQUIRE', 'T_REQUIRE_ONCE' ];
-		for (let i = 0; i < tokens.length; i++) {
+		let startLine = null,
+		    endLine   = null;
+
+		for ( let i = 0; i < tokens.length; i++ ) {
 			const token = tokens[i];
 			if ( ! startLine ) {
 				if ( validTokens.indexOf( token[0] ) < 0 ) {
@@ -152,10 +157,10 @@ module.exports = class extends Generator {
 			break;
 		}
 
-		const lines = contents.split('\n');
+		const lines = contents.split( '\n' );
 		const required = lines.slice( startLine, endLine + 1 );
 
-		required.push( `require_once __DIR__ . '/inc/${slug.toLowerCase()}/namespace.php';` );
+		required.push( `require_once __DIR__ . '/inc/${ slug.toLowerCase() }/namespace.php';` );
 		required.sort( this._sortRequires );
 
 		const newLines = [
@@ -163,6 +168,7 @@ module.exports = class extends Generator {
 			...required.filter( (value, index) => required.indexOf( value ) === index ),
 			...lines.slice( endLine + 1 )
 		];
+
 		return newLines.join( '\n' );
 	}
 };
