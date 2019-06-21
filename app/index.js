@@ -1,10 +1,11 @@
 'use strict';
-var Plugin  = require( '../hm-plugin-base' );
-var chalk   = require( 'chalk' );
-var yosay   = require( 'yosay' );
-var fs      = require( 'fs' );
-var request = require( 'request' );
-var async   = require( 'async' );
+const Plugin  = require( '../hm-plugin-base' ),
+      chalk   = require( 'chalk' ),
+      yosay   = require( 'yosay' ),
+      fs      = require( 'fs' ),
+      request = require( 'request' ),
+      async   = require( 'async' ),
+      slugify = require( 'slugify' );
 
 module.exports = class extends Plugin {
   initializing() {
@@ -67,7 +68,9 @@ module.exports = class extends Plugin {
       name   : 'slug',
       message: 'Plugin Slug',
       default: function( p ) {
-        return this._.slugify( p.name );
+        return slugify( p.name, {
+          lower: true
+        } );
       }.bind(this)
     }, {
       type   : 'input',
