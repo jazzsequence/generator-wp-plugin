@@ -2,6 +2,7 @@ node_modules/
 npm-debug.log
 
 vendor/
+composer.lock
 
 ### OSX ###
 .DS_Store
