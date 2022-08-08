@@ -1,7 +1,7 @@
 node_modules/
 npm-debug.log
 
-# Created by https://www.gitignore.io
+vendor/
 
 ### OSX ###
 .DS_Store
