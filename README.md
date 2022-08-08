@@ -1,4 +1,4 @@
-# Human Made Plugin Generator
+# WordPress Plugin Generator
 [![Build Status](https://secure.travis-ci.org/jazzsequence/generator-hm-plugin.png?branch=develop)](https://travis-ci.org/jazzsequence/generator-hm-plugin)
 
 > [Yeoman](http://yeoman.io) WordPress plugin generator based on Human Made's coding standards.
